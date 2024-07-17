@@ -14,29 +14,71 @@
   <p id="log"></p>
 
   <script>
-    // variables
+    //variables
     let name;
     let welcome;
-    let guess;
+    let pguess;
+    let compare;
     let ppick;
     let cpick;
+    let result;
+    
+    //computer selects random option
+    const optionsarray = ['Bear', 'Ninja', 'Hunter'];
+    const randompick = optionsarray[(Math.random() * optionsarray.length) | 0];
+    console.log(randompick);
+    cguess = randompick;
 
     //prompts
     name = prompt('Welcome to Bear Hunter Ninja! Please enter your name to get started:');
     welcome = 'Hi ' + `${name}` + ' Let\'s play!!';
     alert(welcome);
-    guess = prompt('Who are you: Bear, Ninja, or Hunter?');
+    pguess = prompt('Who are you: Bear, Ninja, or Hunter?');
 
+    //calculate winner
+    const tie = pguess.toLowerCase() === cguess.toLowerCase();
+
+    if (tie) {
+      compare = 2;
+    } else {
+      if ((pguess.toLowerCase() === 'bear' && cguess.toLowerCase() === 'ninja') || (pguess.toLowerCase() === 'hunter' && cguess.toLowerCase() === 'bear') || (pguess.toLowerCase() === 'ninja' && cguess.toLowerCase() === 'hunter')) {
+        compare = 1;
+      } else {
+        if ((pguess.toLowerCase() === 'bear' && cguess.toLowerCase() === 'hunter') || (pguess.toLowerCase() === 'hunter' && cguess.toLowerCase() === 'ninja') || (pguess.toLowerCase() === 'ninja' && cguess.toLowerCase() === 'bear')) {
+          compare = 3;
+        } else {
+          compare = 4;
+        }
+      }
+    }
     //console display
-    ppick = `${name}` + ', You picked ' + `${guess}` + '!';
-    cpick = 'The computer picked Bear!';
-    console.log(`${name}` + ', You picked ' + `${guess}` + '!\n' + 'The computer picked Bear!');
+    switch (compare) {
+      case 1:
+        console.log(`${name}` + ', You picked ' + `${pguess}` + '! \nThe computer picked ' + `${cguess}` + '! \nYou Win!!');
+        result = 'You Win!!'
+        break;
+      case 2:
+        console.log(`${name}` + ', You picked ' + `${pguess}` + '! \nThe computer picked ' + `${cguess}` + '! \nYou Tied.');
+        result = 'You Tied.'
+        break;
+      case 3:
+        console.log(`${name}` + ', You picked ' + `${pguess}` + '! \nThe computer picked ' + `${cguess}` + '! \nThe Computer Wins!!');
+        result = 'The Computer Wins!!'
+        break;
+      case 4:
+        console.log(`${name}` + ', You picked ' + `${pguess}` + '! \nThe computer picked ' + `${cguess}` + '! \nYou didn\'t pick a valid option. Please try again.');
+        result = 'You didn\'t pick a valid option. Please try again.'
+        break;
+    }
 
     //html display
-    document.getElementById('log').innerHTML = `${ppick}` + '<br>' + `${cpick}`;
+    ppick = `${name}` + ', You picked ' + `${pguess}` + '!';
+    cpick = 'The computer picked ' + `${cguess}` + '!';
+    document.getElementById('log').innerHTML = `${ppick}` + '<br>' + `${cpick}` + '<br>' + `${result}`;
 
     //prompt display
-    alert(`${ppick}` + '\n' + `${cpick}`);
+    alert(`${ppick}` + '\n' + `${cpick}` + '\n' + `${result}`);
+
   </script>
 
   <script src="script.js"></script>
