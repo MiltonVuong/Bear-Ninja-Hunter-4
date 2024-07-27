@@ -10,34 +10,54 @@
 </head>
 
 <body>
-  <!-- html display -->
+
+  <!-- place holder for html display -->
   <p id="log"></p>
+
   <script>
+
     //variables
-    let userName;
-    let welcomeMessage;
-    let userGuess;
-    let botGuess;
-    let winnerCheck;
-    let playerPick;
-    let botPick;
-    let resultMessage;
-    const choices = [`Bear`, `Ninja`, `Hunter`];
-    //prompts
-    userName = prompt(`Welcome to Bear Hunter Ninja! Please enter your name to get started:`);
+    let greetingMessage = ``;
+    let userGuess = ``;
+    let botGuess = ``
+    let winnerCheck = 0;
+    let userPickMessage = ``;
+    let botPickMessage = ``;
+    let resultMessage = ``;
+    let botIndex = 0;
+    let playagain = ``;
+    const gameChoices = [`Bear`, `Ninja`, `Hunter`];
+
+    //welcome message and prompt user for name
+    const userName = prompt(`Welcome to Bear Hunter Ninja! Please enter your name to get started:`);
+
+    //loop to handle null and blank values
     if (userName === null) {
       alert(`Please Press F5 to play again.`);
     } else if (userName === ``) {
       alert(`Invalid Entry. \nPlease Press F5 to play again.`);
       alert(`Your name cannot be blank.`);
     } else {
-      welcomeMessage = 'Hi ' + `${userName}` + ' Let\'s play!!';
-      alert(welcomeMessage);
-      //prompts
+
+      //greeting message
+      greetingMessage = `Hi ${userName} Let's play!!`;
+      alert(greetingMessage);
+
+      //start first round of game
       do {
-        compindex = Math.floor(Math.random() * choices.length);
-        botGuess = choices[compindex]; //randompick;
-        userGuess = prompt('Who are you: Bear, Ninja, or Hunter?');
+        //reset do while loop condition to allow user to start a second round then change their mind and exit
+        playagain = `no`;
+
+        //generate random number for bot
+        botIndex = Math.floor(Math.random() * gameChoices.length);
+
+        //search index for bot guess
+        botGuess = gameChoices[botIndex];
+
+        //prompt user for guess
+        userGuess = prompt(`Who are you: Bear, Ninja, or Hunter?`);
+
+        //loop to handle null, blank, and invalid values
         if (userGuess === null) {
           alert(`Please Press F5 to play again.`);
         }
@@ -46,24 +66,38 @@
           alert(`Your guess must be Bear, Ninja, or Hunter.`);
         }
         else {
-          playerindex = choices.findIndex((element) => element.toLowerCase() === userGuess.toLowerCase());
+
+          //compare user guess to bot guess as lowercase
+          playerindex = gameChoices.findIndex((element) => element.toLowerCase() === userGuess.toLowerCase());
+
           //console.log(`player choice ${playerindex} computer choice ${compindex}`);
-          //calculate winner
-          const tie = playerindex === compindex;
+
+          //check who the winner is
+          //identify condition for ties
+          const tie = playerindex === botIndex;
+
+          //test for ties
           if (tie) {
             winnerCheck = 2;
           } else {
-            if ((playerindex === 0 && compindex === 1) || (playerindex === 2 && compindex === 0) || (playerindex === 1 && compindex === 2)) {
+
+            //test for user winning
+            if ((playerindex === 0 && botIndex === 1) || (playerindex === 2 && botIndex === 0) || (playerindex === 1 && botIndex === 2)) {
               winnerCheck = 1;
             }
+
+            // if user did not win assume bot did  
             else {
               winnerCheck = 3;
             }
           }
+
+          //console countdown loop
           for (let i = 3; i >= 0; i--) {
             console.log(i);
           }
-          //console display
+
+          //console display using using user inputs (original case) gameChoices[playerindex] can be used to standardize text case
           switch (winnerCheck) {
             case 1:
               console.log(`${userName} you chose ${userGuess}! \nThe computer chose ${botGuess}! \nYou Win!!`);
@@ -78,17 +112,27 @@
               resultMessage = 'The Computer Wins!!'
               break;
           }
-          //html display
-          playerPick = `${userName} you chose ${userGuess}!`;
+
+          //html display using user inputs (original case) gameChoices[playerindex] can be used to standardize text case
+          userPick = `${userName} you chose ${userGuess}!`;
           botPick = `The computer chose ${botGuess}!`;
-          document.getElementById(`log`).innerHTML = `${playerPick}<br>${botPick}<br>${resultMessage}`
-          //prompt display
-          alert(`${playerPick}\n${botPick}\n${resultMessage}`);
+          document.getElementById(`log`).innerHTML = `${userPick}<br>${botPick}<br>${resultMessage}`
+
+          //prompt display using user inputs (original case) gameChoices[playerindex] can be used to standardize text case
+          alert(`${userPick}\n${botPick}\n${resultMessage}`);
+
+          //prompt user to play again
+          playagain = prompt(`${userName}, would you like to play again, Yes or No?`);
         }
-        playagain = prompt(`${userName}, would you like to play again, Yes or No?`);
+
+        //prompt user to play again
+        //playagain = prompt(`${userName}, would you like to play again, Yes or No?`);
+
+        //check to see if game loop should be restarted
       } while (playagain.toLowerCase() === `yes`);
+
+      //display goodby messages
       alert(`Thank you for playing ${userName}!`)
-      alert(`Press F5 to play again!`)
     }
   </script>
   <script src="script.js"></script>
