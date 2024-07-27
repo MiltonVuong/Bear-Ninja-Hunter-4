@@ -1,89 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <meta name="author" content="milton vuong">
   <title>Bear Hunter Ninja!</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="style.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
   <!-- html display -->
   <p id="log"></p>
-
   <script>
     //variables
-    let name;
-    let welcome;
-    let pguess;
-    let cguess;
-    let compare;
-    let ppick;
-    let cpick;
-    let result;
-    
-    //computer selects random option
-    //const optionsarray = ['Bear', 'Ninja', 'Hunter'];
-    //const randompick = optionsarray[(Math.random() * optionsarray.length) | 0];
-    //console.log(randompick);
-    cguess = 'Bear' //randompick;
-
+    let userName;
+    let welcomeMessage;
+    let userGuess;
+    let botGuess;
+    let winnerCheck;
+    let playerPick;
+    let botPick;
+    let resultMessage;
+    const choices = [`Bear`, `Ninja`, `Hunter`];
     //prompts
-    name = prompt('Welcome to Bear Hunter Ninja! Please enter your name to get started:');
-    welcome = 'Hi ' + `${name}` + ' Let\'s play!!';
-    alert(welcome);
-    pguess = prompt('Who are you: Bear, Ninja, or Hunter?');
-
-    //calculate winner
-    const tie = pguess.toLowerCase() === cguess.toLowerCase();
-
-    if (tie) {
-      compare = 2;
+    userName = prompt(`Welcome to Bear Hunter Ninja! Please enter your name to get started:`);
+    if (userName === null) {
+      alert(`Please Press F5 to play again.`);
+    } else if (userName === ``) {
+      alert(`Invalid Entry. \nPlease Press F5 to play again.`);
+      alert(`Your name cannot be blank.`);
     } else {
-      if ((pguess.toLowerCase() === 'bear' && cguess.toLowerCase() === 'ninja') || (pguess.toLowerCase() === 'hunter' && cguess.toLowerCase() === 'bear') || (pguess.toLowerCase() === 'ninja' && cguess.toLowerCase() === 'hunter')) {
-        compare = 1;
-      } else {
-        if ((pguess.toLowerCase() === 'bear' && cguess.toLowerCase() === 'hunter') || (pguess.toLowerCase() === 'hunter' && cguess.toLowerCase() === 'ninja') || (pguess.toLowerCase() === 'ninja' && cguess.toLowerCase() === 'bear')) {
-          compare = 3;
-        } else {
-          compare = 4;
+      welcomeMessage = 'Hi ' + `${userName}` + ' Let\'s play!!';
+      alert(welcomeMessage);
+      //prompts
+      do {
+        compindex = Math.floor(Math.random() * choices.length);
+        botGuess = choices[compindex]; //randompick;
+        userGuess = prompt('Who are you: Bear, Ninja, or Hunter?');
+        if (userGuess === null) {
+          alert(`Please Press F5 to play again.`);
         }
-      }
+        else if (userGuess === `` || (userGuess.toLowerCase() !== 'bear' && userGuess.toLowerCase() !== 'ninja' && userGuess.toLowerCase() !== 'hunter')) {
+          alert(`Invalid Entry. \nPlease Press F5 to play again.`);
+          alert(`Your guess must be Bear, Ninja, or Hunter.`);
+        }
+        else {
+          playerindex = choices.findIndex((element) => element.toLowerCase() === userGuess.toLowerCase());
+          //console.log(`player choice ${playerindex} computer choice ${compindex}`);
+          //calculate winner
+          const tie = playerindex === compindex;
+          if (tie) {
+            winnerCheck = 2;
+          } else {
+            if ((playerindex === 0 && compindex === 1) || (playerindex === 2 && compindex === 0) || (playerindex === 1 && compindex === 2)) {
+              winnerCheck = 1;
+            }
+            else {
+              winnerCheck = 3;
+            }
+          }
+          for (let i = 3; i >= 0; i--) {
+            console.log(i);
+          }
+          //console display
+          switch (winnerCheck) {
+            case 1:
+              console.log(`${userName} you chose ${userGuess}! \nThe computer chose ${botGuess}! \nYou Win!!`);
+              resultMessage = 'You Win!!'
+              break;
+            case 2:
+              console.log(`${userName} you chose ${userGuess}! \nThe computer chose ${botGuess}! \nYou Tied.`);
+              resultMessage = 'You Tied.'
+              break;
+            case 3:
+              console.log(`${userName} you chose ${userGuess}! \nThe computer chose ${botGuess}! \nThe Computer Wins!!`);
+              resultMessage = 'The Computer Wins!!'
+              break;
+          }
+          //html display
+          playerPick = `${userName} you chose ${userGuess}!`;
+          botPick = `The computer chose ${botGuess}!`;
+          document.getElementById(`log`).innerHTML = `${playerPick}<br>${botPick}<br>${resultMessage}`
+          //prompt display
+          alert(`${playerPick}\n${botPick}\n${resultMessage}`);
+        }
+        playagain = prompt(`${userName}, would you like to play again, Yes or No?`);
+      } while (playagain.toLowerCase() === `yes`);
+      alert(`Thank you for playing ${userName}!`)
+      alert(`Press F5 to play again!`)
     }
-    //console display
-    switch (compare) {
-      case 1:
-        console.log(`${name}` + ', You picked ' + `${pguess}` + '! \nThe computer picked ' + `${cguess}` + '! \nYou Win!!');
-        result = 'You Win!!'
-        break;
-      case 2:
-        console.log(`${name}` + ', You picked ' + `${pguess}` + '! \nThe computer picked ' + `${cguess}` + '! \nYou Tied.');
-        result = 'You Tied.'
-        break;
-      case 3:
-        console.log(`${name}` + ', You picked ' + `${pguess}` + '! \nThe computer picked ' + `${cguess}` + '! \nThe Computer Wins!!');
-        result = 'The Computer Wins!!'
-        break;
-      case 4:
-        console.log(`${name}` + ', You picked ' + `${pguess}` + '! \nThe computer picked ' + `${cguess}` + '! \nYou didn\'t pick a valid option. Please try again.');
-        result = 'You didn\'t pick a valid option. Please try again.'
-        break;
-    }
-
-    //html display
-    ppick = `${name}` + ', You picked ' + `${pguess}` + '!';
-    cpick = 'The computer picked ' + `${cguess}` + '!';
-    document.getElementById('log').innerHTML = `${ppick}` + '<br>' + `${cpick}` + '<br>' + `${result}`;
-
-    //prompt display
-    alert(`${ppick}` + '\n' + `${cpick}` + '\n' + `${result}`);
-
   </script>
-
   <script src="script.js"></script>
-
 </body>
 
 </html>
