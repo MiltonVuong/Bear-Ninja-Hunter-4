@@ -19,7 +19,7 @@
     //variables
     let greetingMessage = ``;
     let userGuess = ``;
-    let botGuess = ``
+    let botGuess = ``;
     let winnerCheck = 0;
     let userPickMessage = ``;
     let botPickMessage = ``;
@@ -35,12 +35,12 @@
     if (userName === null) {
       alert(`Please Press F5 to play again.`);
     } else if (userName === ``) {
-      alert(`Invalid Entry. \nPlease Press F5 to play again.`);
       alert(`Your name cannot be blank.`);
+      alert(`Invalid Entry. \nPlease Press F5 to play again.`);
     } else {
 
       //greeting message
-      greetingMessage = `Hi ${userName} Let's play!!`;
+      greetingMessage = `Hi ${userName} Let\'s play!!`;
       alert(greetingMessage);
 
       //start first round of game
@@ -61,9 +61,9 @@
         if (userGuess === null) {
           alert(`Please Press F5 to play again.`);
         }
-        else if (userGuess === `` || (userGuess.toLowerCase() !== 'bear' && userGuess.toLowerCase() !== 'ninja' && userGuess.toLowerCase() !== 'hunter')) {
-          alert(`Invalid Entry. \nPlease Press F5 to play again.`);
+        else if (userGuess === `` || (userGuess.toLowerCase() !== `bear` && userGuess.toLowerCase() !== `ninja` && userGuess.toLowerCase() !== `hunter`)) {
           alert(`Your guess must be Bear, Ninja, or Hunter.`);
+          alert(`Invalid Entry. \nPlease Press F5 to play again.`);
         }
         else {
 
@@ -101,15 +101,15 @@
           switch (winnerCheck) {
             case 1:
               console.log(`${userName} you chose ${userGuess}! \nThe computer chose ${botGuess}! \nYou Win!!`);
-              resultMessage = 'You Win!!'
+              resultMessage = `You Win!!`
               break;
             case 2:
               console.log(`${userName} you chose ${userGuess}! \nThe computer chose ${botGuess}! \nYou Tied.`);
-              resultMessage = 'You Tied.'
+              resultMessage = `You Tied.`
               break;
             case 3:
               console.log(`${userName} you chose ${userGuess}! \nThe computer chose ${botGuess}! \nThe Computer Wins!!`);
-              resultMessage = 'The Computer Wins!!'
+              resultMessage = `The Computer Wins!!`
               break;
           }
 
@@ -124,9 +124,6 @@
           //prompt user to play again
           playagain = prompt(`${userName}, would you like to play again, Yes or No?`);
         }
-
-        //prompt user to play again
-        //playagain = prompt(`${userName}, would you like to play again, Yes or No?`);
 
         //check to see if game loop should be restarted
       } while (playagain.toLowerCase() === `yes`);
