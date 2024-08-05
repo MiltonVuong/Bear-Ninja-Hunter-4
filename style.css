@@ -2,3 +2,51 @@ html {
   height: 100%;
   width: 100%;
 }
+
+* {
+  background-color: #bdb8b2;
+  color: #242c39;
+  border-radius: 6px;
+}
+
+div {
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.centered {
+  text-align: center;
+
+}
+
+ul,
+il {
+  text-align: left;
+}
+
+.results {
+  text-align: left;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 2;
+  padding: 10px;
+  border: 1px #604b3a solid;
+  background-color: #c0ab9a;
+  display: none;
+}
+
+#playAgain {
+  display: none;
+}
+
+.hide {
+  display: none;
+}
+
+hr {
+  border-color: #202020;
+}
